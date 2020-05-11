@@ -1,0 +1,22 @@
+version: 2.1
+
+orbs:
+  maven: circleci/maven@0.0.12
+jobs:
+  test-mvn:
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "pom.xml" }}
+        - v1-dependencies-
+    - run:
+        command: ./mvnw test
+
+
+workflows:
+  maven_test:
+    jobs:
+      #- maven/test # checkout, build, test, and upload test results
+      #-test-appsurify
+      -test-mvn
